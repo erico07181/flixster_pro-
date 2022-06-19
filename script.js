@@ -4,6 +4,8 @@ let page = 1;
 
 let movForm = document.querySelector("form");
 
+let mainScreen = true;
+
 
 
 
@@ -16,7 +18,6 @@ const generateError = (err) => {
 
 document.addEventListener('DOMContentLoaded', async(evt) => {
     evt.preventDefault();
-
 
     let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=${page}`;
 
@@ -45,7 +46,10 @@ document.addEventListener('DOMContentLoaded', async(evt) => {
 
 movForm.addEventListener("submit", async(evt) => {
     evt.preventDefault();
+    mainScreen = false;
+    page = 1;
 
+    document.querySelector("#movImage").innerHTML= "";
 
     movSearch = evt.target.movies.value.split(' ').join('+');
 
@@ -76,14 +80,49 @@ movForm.addEventListener("submit", async(evt) => {
     }
 });
 
-movForm.addEventListener("click", async(evt) => {
+load_click.addEventListener("click", async(evt) => {
     evt.preventDefault();
-    console.log("Here")
-
     page++;
     console.log(page)
 
+    if (mainScreen == true){
+        let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=${page}`;
+        movImage = document.querySelector("#movImage")
 
+        try {
+            let response = await fetch(url);
+
+            let responseData = await response.json();
+
+            console.log("responseData is: ", responseData);
+
+
+            displayResults(responseData);
+        }
+
+        catch(e){
+            generateError(evt.target.movies.value);
+        }
+    }
+    else{
+        let url = `https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=${movSearch}&page=${page}`;
+        try {
+            let response = await fetch(url);
+
+            let responseData = await response.json();
+
+            console.log("responseData is: ", responseData);
+
+
+            displayResults(responseData);
+        }
+
+        catch(e){
+            generateError(evt.target.movies.value);
+        }   
+    }
+
+    
 
 })
 
