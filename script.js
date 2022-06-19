@@ -135,14 +135,8 @@ function displayResults(responseData){
         movImage.innerHTML += `<img src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">`;
         console.log(responseData.results[i].title)
         movImage.innerHTML += `<p>${responseData.results[i].title}</p>`
-        movImage.innerHTML += `<p>${responseData.results[i].vote_average}</p>`
+        movImage.innerHTML += `<p>⭐${responseData.results[i].vote_average}</p>`
     }
-
-
-
-
-
-
 
 }
 
