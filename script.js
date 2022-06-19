@@ -1,9 +1,10 @@
 let APIkey = "1855887f77c9265ce36d85e3d981773d";
 
+let page = 1;
 
 let movForm = document.querySelector("form");
 
-//let url = `https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=Jack+Reacher`;
+
 
 
 const generateError = (err) => {
@@ -11,6 +12,36 @@ const generateError = (err) => {
         <span style="color: red;">${err} not found</span>
     `;
 }
+
+
+document.addEventListener('DOMContentLoaded', async(evt) => {
+    evt.preventDefault();
+
+
+    let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${APIkey}&language=en-US&page=${page}`;
+
+    console.log(url);
+
+    movImage = document.querySelector("#movImage");
+
+    try {
+        document.querySelector("#movImage").innerHTML= "";
+
+        let response = await fetch(url);
+
+        let responseData = await response.json();
+
+        console.log("responseData is: ", responseData);
+
+
+        displayResults(responseData);
+    }
+
+    catch(e){
+        console.log("error")
+    }
+
+})
 
 movForm.addEventListener("submit", async(evt) => {
     evt.preventDefault();
@@ -20,9 +51,7 @@ movForm.addEventListener("submit", async(evt) => {
 
     console.log(movSearch);
 
-    let url = `https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=${movSearch}`;
-
-    //https://images.tmdb.org/t/p/w500
+    let url = `https://api.themoviedb.org/3/search/movie?api_key=${APIkey}&query=${movSearch}&page=${page}`;
 
     console.log(url);
 
@@ -47,6 +76,17 @@ movForm.addEventListener("submit", async(evt) => {
     }
 });
 
+movForm.addEventListener("click", async(evt) => {
+    evt.preventDefault();
+    console.log("Here")
+
+    page++;
+    console.log(page)
+
+
+
+})
+
 function displayResults(responseData){
     console.log(document.querySelector("#movImage"));
 
@@ -56,7 +96,15 @@ function displayResults(responseData){
         movImage.innerHTML += `<img src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">`;
         console.log(responseData.results[i].title)
         movImage.innerHTML += `<p>${responseData.results[i].title}</p>`
+        movImage.innerHTML += `<p>${responseData.results[i].vote_average}</p>`
     }
+
+
+
+
+
+
+
 }
 
 
