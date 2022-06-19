@@ -1,4 +1,43 @@
 img {
-    width: 200px;
-    height: 300px;
+    width: 300;
+    height: 400px;
+    padding-right:20;
+    padding-left: 20px;
+
+}
+
+body {
+    background-color: #774360;
+}
+
+#movImage {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    
+}
+
+#home_button{
+    color: black;
+}
+
+p {
+    max-width: 150px;
+    color: #D0C9C0;
+    border: 5px solid red;
+}
+
+
+
+#movie {
+    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 104px;
+    left: 0px;
+    top: 0px;
+    text-align: right;
+
+    background: #4C3A51;
+    border: 1px solid #000000;
 }

@@ -8,7 +8,6 @@ let mainScreen = true;
 
 
 
-
 const generateError = (err) => {
     document.lastChild.innerHTML += `
         <span style="color: red;">${err} not found</span>
@@ -121,9 +120,6 @@ load_click.addEventListener("click", async(evt) => {
             generateError(evt.target.movies.value);
         }   
     }
-
-    
-
 })
 
 function displayResults(responseData){
@@ -132,11 +128,16 @@ function displayResults(responseData){
     console.log(responseData.results);
 
     for(let i = 0; i < responseData.results.length; i++){
-        movImage.innerHTML += `<img src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">`;
-        console.log(responseData.results[i].title)
-        movImage.innerHTML += `<p>${responseData.results[i].title}</p>`
-        movImage.innerHTML += `<p>⭐${responseData.results[i].vote_average}</p>`
+
+        document.getElementById("movImage").innerHTML += `<div>
+        <img src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">
+            <div id="text_box">
+                <p>⭐${responseData.results[i].vote_average}</p>
+                <p>${responseData.results[i].title}</p>
+            </div>
+        </div>`;
     }
+
 
 }
 
