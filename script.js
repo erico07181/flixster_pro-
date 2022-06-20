@@ -10,7 +10,7 @@ let mainScreen = true;
 
 const generateError = (err) => {
     document.lastChild.innerHTML += `
-        <span style="color: red;">${err} not found</span>
+        <span style="color: red;">${err} Please try again</span>
     `;
 }
 
@@ -50,7 +50,7 @@ movForm.addEventListener("submit", async(evt) => {
 
     document.querySelector("#movImage").innerHTML= "";
 
-    movSearch = evt.target.movies.value.split(' ').join('+');
+    movSearch = evt.target.search_input.value.split(' ').join('+');
 
     console.log(movSearch);
 
@@ -75,11 +75,11 @@ movForm.addEventListener("submit", async(evt) => {
     }
 
     catch(e){
-        generateError(evt.target.movies.value);
+        generateError(evt.target.search_input.value);
     }
 });
 
-load_click.addEventListener("click", async(evt) => {
+load_more_movies_btn.addEventListener("click", async(evt) => {
     evt.preventDefault();
     page++;
     console.log(page)
@@ -100,7 +100,7 @@ load_click.addEventListener("click", async(evt) => {
         }
 
         catch(e){
-            generateError(evt.target.movies.value);
+            generateError(evt.target.search_input.value);
         }
     }
     else{
@@ -117,7 +117,7 @@ load_click.addEventListener("click", async(evt) => {
         }
 
         catch(e){
-            generateError(evt.target.movies.value);
+            generateError(evt.target.search_input.value);
         }   
     }
 })
@@ -129,11 +129,11 @@ function displayResults(responseData){
 
     for(let i = 0; i < responseData.results.length; i++){
 
-        document.getElementById("movImage").innerHTML += `<div>
-        <img src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">
+        document.getElementById("movImage").innerHTML += `<div id="movie_card">
+        <img id="movie-poster" src="https://images.tmdb.org/t/p/w500${responseData.results[i].poster_path}">
             <div id="text_box">
-                <p>⭐${responseData.results[i].vote_average}</p>
-                <p>${responseData.results[i].title}</p>
+                <p id="movie-votes">⭐${responseData.results[i].vote_average}</p>
+                <p id="movie-title">${responseData.results[i].title}</p>
             </div>
         </div>`;
     }
